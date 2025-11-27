@@ -1,40 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import type { Product } from '../types';
-
-// Dummy data (same as Home.tsx for now, ideally moved to a shared file or fetched)
-const DUMMY_PRODUCTS: Product[] = [
-    {
-        id: '1',
-        title: 'Neon Cyber Tee',
-        price: 550,
-        image_urls: ['https://i.ibb.co/5GzXhzB/tshirt1.jpg'],
-        stock: { M: 10, L: 5 },
-    },
-    {
-        id: '2',
-        title: 'Abstract Blue',
-        price: 600,
-        image_urls: ['https://i.ibb.co/MC7r11h/tshirt2.jpg'],
-        stock: { S: 2, M: 8, XL: 1 },
-    },
-    {
-        id: '3',
-        title: 'Purple Haze',
-        price: 500,
-        image_urls: ['https://i.ibb.co/hR5y2yL/tshirt3.jpg'],
-        stock: { L: 10, XXL: 3 },
-    },
-];
+import { db } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const ProductDetails = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState<string>('');
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const product = DUMMY_PRODUCTS.find((p) => p.id === id);
+    useEffect(() => {
+        if (id) {
+            fetchProduct(id);
+        }
+    }, [id]);
+
+    const fetchProduct = async (productId: string) => {
+        setLoading(true);
+        try {
+            const docRef = doc(db, 'products', productId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                setProduct({ id: docSnap.id, ...docSnap.data() } as Product);
+            } else {
+                setProduct(null);
+            }
+        } catch (error) {
+            console.error("Error fetching product: ", error);
+            setProduct(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return <div className="text-white text-center pt-20">Loading product...</div>;
+    }
 
     if (!product) {
         return <div className="text-white text-center pt-20">Product not found</div>;
@@ -71,8 +77,8 @@ const ProductDetails = () => {
                                     onClick={() => setSelectedSize(size)}
                                     disabled={count === 0}
                                     className={`px-4 py-2 rounded-lg border transition-all ${selectedSize === size
-                                            ? 'bg-purple-600 border-purple-600 text-white'
-                                            : 'border-white/20 hover:border-white/50 text-gray-300'
+                                        ? 'bg-purple-600 border-purple-600 text-white'
+                                        : 'border-white/20 hover:border-white/50 text-gray-300'
                                         } ${count === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     {size}
