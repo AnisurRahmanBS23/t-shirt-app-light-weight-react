@@ -20,22 +20,22 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="pt-24 pb-10 px-4 max-w-7xl mx-auto text-white">
+        <div className="pt-24 pb-10 px-4 max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-bold">Admin Dashboard</h2>
-                <button onClick={handleLogout} className="text-red-400 hover:text-red-300">Logout</button>
+                <h2 className="text-3xl font-bold text-gray-900">Admin Dashboard</h2>
+                <button onClick={handleLogout} className="text-red-600 hover:text-red-700 font-medium">Logout</button>
             </div>
 
-            <div className="flex space-x-4 mb-6 border-b border-white/20">
+            <div className="flex space-x-4 mb-6 border-b border-gray-200">
                 <button
                     onClick={() => setActiveTab('orders')}
-                    className={`pb-2 px-4 ${activeTab === 'orders' ? 'border-b-2 border-purple-500 text-purple-300' : 'text-gray-400'}`}
+                    className={`pb-2 px-4 ${activeTab === 'orders' ? 'border-b-2 border-slate-600 text-slate-700 font-semibold' : 'text-gray-500'}`}
                 >
                     Orders
                 </button>
                 <button
                     onClick={() => setActiveTab('products')}
-                    className={`pb-2 px-4 ${activeTab === 'products' ? 'border-b-2 border-purple-500 text-purple-300' : 'text-gray-400'}`}
+                    className={`pb-2 px-4 ${activeTab === 'products' ? 'border-b-2 border-slate-600 text-slate-700 font-semibold' : 'text-gray-500'}`}
                 >
                     Products
                 </button>

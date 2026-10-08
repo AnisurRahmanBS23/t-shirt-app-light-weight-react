@@ -29,12 +29,12 @@ const Home = () => {
     };
 
     return (
-        <div className="pt-20 pb-10 px-4 max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Latest Drops</h2>
+        <div className="pt-20 pb-10 px-4 max-w-7xl mx-auto bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl shadow-lg">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Latest Collection</h2>
             {loading ? (
-                <p className="text-white text-center">Loading products...</p>
+                <p className="text-gray-600 text-center">Loading products...</p>
             ) : products.length === 0 ? (
-                <p className="text-white text-center">No products available. Add products from Admin Panel!</p>
+                <p className="text-gray-600 text-center">No products available. Add products from Admin Panel!</p>
             ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                     {products.map((product) => (

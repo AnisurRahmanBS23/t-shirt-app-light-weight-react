@@ -40,8 +40,6 @@ const Checkout = () => {
 
             const docRef = await addDoc(collection(db, 'orders'), orderData);
 
-            // TODO: Decrement stock in Firestore (will handle in Admin or Cloud Function for now to keep it simple, or add batch write here)
-
             clearCart();
             alert(`Order placed successfully! Order ID: ${docRef.id}`);
             navigate('/');
@@ -54,54 +52,54 @@ const Checkout = () => {
     };
 
     return (
-        <div className="pt-24 pb-10 px-4 max-w-md mx-auto text-white">
-            <h2 className="text-3xl font-bold mb-8 text-center">Checkout</h2>
-            <form onSubmit={handleSubmit} className="bg-white/10 p-6 rounded-xl space-y-4">
+        <div className="pt-24 pb-10 px-4 max-w-md mx-auto">
+            <h2 className="text-3xl font-bold mb-8 text-center text-gray-900">Checkout</h2>
+            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl space-y-4 shadow-md border border-gray-200">
                 <div>
-                    <label className="block text-sm font-medium mb-1">Full Name</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Full Name</label>
                     <input
                         type="text"
                         name="name"
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500"
+                        className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-slate-500 text-gray-900"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Phone Number</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Phone Number</label>
                     <input
                         type="tel"
                         name="phone"
                         required
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500"
+                        className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-slate-500 text-gray-900"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Address</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Address</label>
                     <textarea
                         name="address"
                         required
                         value={formData.address}
                         onChange={handleChange}
                         rows={3}
-                        className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500"
+                        className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-slate-500 text-gray-900"
                     />
                 </div>
 
-                <div className="border-t border-white/20 pt-4 mt-4">
-                    <div className="flex justify-between mb-2">
+                <div className="border-t border-gray-200 pt-4 mt-4">
+                    <div className="flex justify-between mb-2 text-gray-700">
                         <span>Total Amount (COD)</span>
-                        <span className="font-bold text-xl">{cartTotal + 100} Tk</span>
+                        <span className="font-bold text-xl text-gray-900">{cartTotal + 100} Tk</span>
                     </div>
                 </div>
 
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50"
+                    className="w-full bg-slate-600 hover:bg-slate-700 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 shadow-lg"
                 >
                     {loading ? 'Placing Order...' : 'Confirm Order'}
                 </button>
